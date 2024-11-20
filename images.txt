@@ -1,1 +1,1 @@
-nginx:latest
+nginx:1.24.1
