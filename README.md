@@ -1,4 +1,4 @@
-# docker-image-sync
+# image-sync
 使用 Github Action 同步Docker 镜像至腾讯云 Coding 制品库，解决国内拉取镜像失败问题
 
 随着国内各 Docker 镜像仓库被下，现在拉个镜像真是一言难尽，通过fork 本仓库将镜像同步至腾讯云 Coding 制品库，来解决拉取 Docker 镜像失败问题。
