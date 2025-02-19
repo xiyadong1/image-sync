@@ -4,3 +4,4 @@ redis:7.0.4-alpine
 easzlab/nfs-subdir-external-provisioner:v4.0.1
 izakmarais/grafana-reporter:latest
 grafana/grafana-image-renderer:latest
+us-central1-docker.pkg.dev/keephq/keep/keep-ui
