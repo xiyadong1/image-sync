@@ -1,7 +1,8 @@
-nginx:1.26.2
-emqx:5.3.0
-redis:7.0.4-alpine
-easzlab/nfs-subdir-external-provisioner:v4.0.1
-izakmarais/grafana-reporter:latest
-grafana/grafana-image-renderer:latest
-us-central1-docker.pkg.dev/keephq/keep/keep-ui
+#nginx:1.26.2
+#emqx:5.3.0
+#redis:7.0.4-alpine
+#easzlab/nfs-subdir-external-provisioner:v4.0.1
+#izakmarais/grafana-reporter:latest
+#grafana/grafana-image-renderer:latest
+kienhd11997/keep-ui:latest
+
