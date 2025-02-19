@@ -4,5 +4,5 @@
 #easzlab/nfs-subdir-external-provisioner:v4.0.1
 #izakmarais/grafana-reporter:latest
 #grafana/grafana-image-renderer:latest
-kienhd11997/keep-ui:latest
-
+#kienhd11997/keep-ui:latest
+kienhd11997/keep-api:latest
