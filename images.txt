@@ -6,4 +6,5 @@
 #grafana/grafana-image-renderer:latest
 #kienhd11997/keep-ui:latest
 #kienhd11997/keep-api:latest
-robustadev/krr:v1.21.0
+#robustadev/krr:v1.21.0
+graylog/graylog:6.1.4
