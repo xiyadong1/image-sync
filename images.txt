@@ -9,4 +9,5 @@
 #robustadev/krr:v1.21.0
 #graylog/graylog:6.1.4
 #quay.io/argoproj/argocd:v2.4.9
-xuxueli/xxl-job-admin:2.3.0
+#xuxueli/xxl-job-admin:2.3.0
+ollama/ollama:0.6.2
