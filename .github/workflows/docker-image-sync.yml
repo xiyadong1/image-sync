@@ -61,9 +61,5 @@ jobs:
             # 推送镜像到腾讯云 Coding
             docker push $target_image
             
-            # 输出完整的镜像 URL
             echo "镜像 $image 同步完成，已推送到 $target_image"
-            
-            # 输出完整的镜像 URL，使用引号包裹以防特殊字符转义
-            echo "完整的镜像 URL: \"$target_image\""
           done < images.txt
