@@ -11,4 +11,5 @@
 #quay.io/argoproj/argocd:v2.4.9
 #xuxueli/xxl-job-admin:2.3.0
 #ollama/ollama:0.6.2
-mysql:8.0.41
+#mysql:8.0.41
+provectuslabs/kafka-ui:latest
