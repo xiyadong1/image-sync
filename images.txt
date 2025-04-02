@@ -12,4 +12,5 @@
 #xuxueli/xxl-job-admin:2.3.0
 #ollama/ollama:0.6.2
 #mysql:8.0.41
-provectuslabs/kafka-ui:latest
+#provectuslabs/kafka-ui:latest
+provectuslabs/kafka-ui:v0.7.2
