@@ -13,4 +13,5 @@
 #ollama/ollama:0.6.2
 #mysql:8.0.41
 #provectuslabs/kafka-ui:latest
-provectuslabs/kafka-ui:v0.7.2
+#provectuslabs/kafka-ui:v0.7.2
+gvenzl/oracle-xe:21.3.0
