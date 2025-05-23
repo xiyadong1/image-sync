@@ -17,4 +17,5 @@
 #gvenzl/oracle-xe:21.3.0
 #goharbor/nginx-photon:v2.3.4
 #kubesphere/pause:3.2
-zookeeper:3.7.1
+#zookeeper:3.7.1
+node:18
