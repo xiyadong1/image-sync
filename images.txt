@@ -19,4 +19,4 @@
 #kubesphere/pause:3.2
 #zookeeper:3.7.1
 #node:18
-seata:2.0.1
+seata-server:2.0.1
