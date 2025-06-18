@@ -23,4 +23,8 @@
 #gluster/glusterfs-csi-driver:latest
 #heketi/heketi:dev
 #heketi/heketi:latest
-humble/glusterfs-provisioner:latest
+#humble/glusterfs-provisioner:latest
+longhornio/csi-provisioner:v3.4.1-amd64
+longhornio/csi-attacher:v4.2.0-amd64
+longhornio/csi-node-driver-registrar:v2.3.0-amd64
+
