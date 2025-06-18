@@ -21,4 +21,5 @@
 #node:18
 #seata-server:2.0.1
 #gluster/glusterfs-csi-driver:latest
-heketi/heketi:dev
+#heketi/heketi:dev
+heketi/heketi:latest
