@@ -20,4 +20,4 @@
 #zookeeper:3.7.1
 #node:18
 #seata-server:2.0.1
-docker.io/gluster/glusterfs-csi-driver
+gluster/glusterfs-csi-driver:latest
