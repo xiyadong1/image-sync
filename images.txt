@@ -30,11 +30,6 @@
 #openebs/provisioner-localpv:3.5.0
 #openebs/node-disk-manager:2.1.0
 #openebs/node-disk-operator:2.1.0
-registry.k8s.io/sig-storage/csi-provisioner:v5.2.0
-registry.k8s.io/sig-storage/csi-resizer:v1.11.2
-registry.k8s.io/sig-storage/csi-snapshotter:v7.0.0
-registry.k8s.io/sig-storage/snapshot-controller:v7.0.0
-registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.13.0
 docker.io/openebs/mayastor-csi-node:v2.9.0
 docker.io/openebs/mayastor-agent-ha-node:v2.9.0
 
