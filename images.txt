@@ -30,6 +30,7 @@
 #openebs/provisioner-localpv:3.5.0
 #openebs/node-disk-manager:2.1.0
 #openebs/node-disk-operator:2.1.0
-openebs/mayastor-csi-node:v2.9.0
-openebs/mayastor-agent-ha-node:v2.9.0
+#openebs/mayastor-csi-node:v2.9.0
+#openebs/mayastor-agent-ha-node:v2.9.0
+sonatype/nexus3:3.43.0
 
