@@ -43,4 +43,5 @@
 #taigaio/taiga-protected:latest
 #nginx:1.19-alpine
 #python:3.12.3
-python:3.12.3-alpine
+#python:3.12.3-alpine
+python:3.12.3-slim
