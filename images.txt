@@ -44,4 +44,5 @@
 #nginx:1.19-alpine
 #python:3.12.3
 #python:3.12.3-alpine
-python:3.12.3-slim
+#python:3.12.3-slim
+registry.k8s.io/prometheus-adapter/prometheus-adapter:v0.12.0
