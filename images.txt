@@ -45,5 +45,4 @@
 #python:3.12.3
 #python:3.12.3-alpine
 #python:3.12.3-slim
-bitnami/kube-state-metrics:1.9.7
-juestnow/addon-resizer:1.8.5
+bitnami/kubectl:latest
