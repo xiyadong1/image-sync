@@ -45,4 +45,5 @@
 #python:3.12.3
 #python:3.12.3-alpine
 #python:3.12.3-slim
-bitnami/kubectl:latest
+#bitnami/kubectl:latest
+k8s.gcr.io/pause:3.7
