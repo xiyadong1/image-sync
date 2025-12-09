@@ -48,4 +48,5 @@
 #bitnami/kubectl:latest
 #k8s.gcr.io/pause:3.7
 #kubectl:1.25
-rabbitmq:3.12-management
+#rabbitmq:3.12-management
+jenkins/jenkins:lts 
