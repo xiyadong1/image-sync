@@ -49,4 +49,9 @@
 #k8s.gcr.io/pause:3.7
 #kubectl:1.25
 #rabbitmq:3.12-management
-jenkins/jenkins:lts 
+#jenkins/jenkins:lts 
+exadel/compreface-core:1.2.0
+exadel/compreface-admin:1.2.0
+exadel/compreface-fe:1.2.0
+exadel/compreface-api:1.2.0
+exadel/compreface-postgres-db:1.2.0
