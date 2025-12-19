@@ -50,8 +50,11 @@
 #kubectl:1.25
 #rabbitmq:3.12-management
 #jenkins/jenkins:lts 
-exadel/compreface-core:1.2.0
-exadel/compreface-admin:1.2.0
-exadel/compreface-fe:1.2.0
-exadel/compreface-api:1.2.0
-exadel/compreface-postgres-db:1.2.0
+#exadel/compreface-core:1.2.0
+#exadel/compreface-admin:1.2.0
+#exadel/compreface-fe:1.2.0
+#exadel/compreface-api:1.2.0
+#exadel/compreface-postgres-db:1.2.0
+apolloconfig/apollo-configservice:1.5.1
+apolloconfig/apollo-adminservice:1.5.1
+apolloconfig/apollo-portal:1.5.1
