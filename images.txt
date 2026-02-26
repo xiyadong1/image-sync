@@ -55,6 +55,9 @@
 #exadel/compreface-fe:1.2.0
 #exadel/compreface-api:1.2.0
 #exadel/compreface-postgres-db:1.2.0
-apolloconfig/apollo-configservice:1.5.1
-apolloconfig/apollo-adminservice:1.5.1
-apolloconfig/apollo-portal:1.5.1
+#apolloconfig/apollo-configservice:1.5.1
+#apolloconfig/apollo-adminservice:1.5.1
+#apolloconfig/apollo-portal:1.5.1
+pgvector/pgvector:pg16
+postgres:16
+qihangnet/zai:v1.0.26
