@@ -61,7 +61,8 @@
 #pgvector/pgvector:pg16
 #postgres:16
 #qihangnet/zai:v1.0.26
-redis:6.2
-victoriametrics/victoria-metrics:v1.79.12
-flashcatcloud/nightingale:latest
-flashcatcloud/categraf:latest
+#redis:6.2
+#victoriametrics/victoria-metrics:v1.79.12
+#flashcatcloud/nightingale:latest
+#flashcatcloud/categraf:latest
+alpine:3.21.6
