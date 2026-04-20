@@ -65,4 +65,5 @@
 #victoriametrics/victoria-metrics:v1.79.12
 #flashcatcloud/nightingale:latest
 #flashcatcloud/categraf:latest
-alpine:3.21.6
+#alpine:3.21.6
+vllm/vllm-openai:v0.19.1
