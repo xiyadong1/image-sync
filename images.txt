@@ -68,4 +68,5 @@ goharbor/harbor-db:v2.3.4
 #flashcatcloud/categraf:latest
 #alpine:3.21.6
 #vllm/vllm-openai:v0.19.1
-openjdk:8u342-jre-slim-bullseye
+#openjdk:8u342-jre-slim-bullseye
+gcr.io/heapster/eventrouter:v0.4
