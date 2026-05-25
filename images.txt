@@ -69,4 +69,5 @@ goharbor/harbor-db:v2.3.4
 #alpine:3.21.6
 #vllm/vllm-openai:v0.19.1
 #openjdk:8u342-jre-slim-bullseye
-gcr.io/heapster/eventrouter:v0.4
+#gcr.io/heapster/eventrouter:v0.4
+python:3.10.20
