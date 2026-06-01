@@ -28,33 +28,20 @@ jobs:
           username: ${{ secrets.CODING_USERNAME }}
           password: ${{ secrets.CODING_PASSWORD }}
       
-      - name: 安装腾讯云 CLI 并获取 CCR 临时密码
+      - name: 登录到腾讯云 CCR 个人版镜像仓库
         run: |
-          # 安装腾讯云 CLI
-          pip install tccli
-          
-          # 配置腾讯云 CLI
-          tccli configure set secretId ${{ secrets.TENCENT_CLOUD_SECRET_ID }}
-          tccli configure set secretKey ${{ secrets.TENCENT_CLOUD_SECRET_KEY }}
-          tccli configure set region ap-guangzhou
-          
-          # 获取 CCR 临时登录密码
-          # 获取长期密码（24小时有效）
-          PASSWORD=$(tccli tcr CreateInstanceToken --RegistryId ${{ secrets.CCR_INSTANCE_ID }} --TokenType LongTerm --output json | jq -r '.Token')
-          
-          if [ -z "$PASSWORD" ] || [ "$PASSWORD" = "null" ]; then
-            # 如果上面失败，尝试获取临时密码
-            PASSWORD=$(tccli tcr CreateInstanceToken --RegistryId ${{ secrets.CCR_INSTANCE_ID }} --output json | jq -r '.Token')
-          fi
-          
-          echo "CCR_PASSWORD=$PASSWORD" >> $GITHUB_ENV
-          
-          # 使用获取的密码登录
-          echo "$PASSWORD" | docker login ${{ secrets.CCR_REGISTRY }} \
-            --username ${{ secrets.TENCENT_CLOUD_SECRET_ID }} \
+          echo "登录到 CCR: ${{ secrets.CCR_REGISTRY }}"
+          # 使用腾讯云账号ID和镜像仓库密码登录
+          echo "${{ secrets.CCR_PASSWORD }}" | docker login ${{ secrets.CCR_REGISTRY }} \
+            --username ${{ secrets.CCR_USERNAME }} \
             --password-stdin
           
-          echo "CCR 登录成功"
+          if [ $? -eq 0 ]; then
+            echo "✓ CCR 个人版登录成功"
+          else
+            echo "✗ CCR 登录失败，请检查用户名是否为腾讯云账号ID，密码是否为镜像仓库密码"
+            exit 1
+          fi
 
       - name: 读取镜像列表并同步到两个仓库
         run: |
