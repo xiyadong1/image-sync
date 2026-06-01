@@ -1,1 +1,1 @@
-pytorch/pytorch:2.5.1-cpu
+python:3.10-slim
