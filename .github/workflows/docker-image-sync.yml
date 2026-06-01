@@ -37,6 +37,7 @@ jobs:
           registry: ${{ secrets.CCR_REGISTRY }}
           username: ${{ secrets.CCR_USERNAME }}
           password: ${{ secrets.CCR_PASSWORD }}
+          ecr: false
 
       - name: 读取镜像列表并同步到 Coding + CCR
         run: |
