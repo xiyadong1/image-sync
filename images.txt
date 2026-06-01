@@ -1,1 +1,1 @@
-node:20-alpine
+python:3.10-slim
