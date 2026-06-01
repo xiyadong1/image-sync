@@ -1,4 +1,4 @@
-name: Docker Image Sync to Tencent Coding and CCR
+name: Docker Image Sync to Tencent Coding & Tencent CCR
 
 on:
   push:
@@ -6,8 +6,10 @@ on:
       - 'images.txt'
 
 env:
+  # Coding 仓库环境变量
   CODING_REGISTRY: ${{ secrets.CODING_REGISTRY }}
   CODING_NAMESPACE: ${{ secrets.CODING_NAMESPACE }}
+  # 新增：腾讯云容器镜像服务 CCR 环境变量
   CCR_REGISTRY: ${{ secrets.CCR_REGISTRY }}
   CCR_NAMESPACE: ${{ secrets.CCR_NAMESPACE }}
 
@@ -27,33 +29,25 @@ jobs:
           registry: ${{ secrets.CODING_REGISTRY }}
           username: ${{ secrets.CODING_USERNAME }}
           password: ${{ secrets.CODING_PASSWORD }}
-      
-      - name: 登录到腾讯云 CCR 个人版镜像仓库
-        run: |
-          echo "登录到 CCR: ${{ secrets.CCR_REGISTRY }}"
-          # 使用腾讯云账号ID和镜像仓库密码登录
-          echo "${{ secrets.CCR_PASSWORD }}" | docker login ${{ secrets.CCR_REGISTRY }} \
-            --username ${{ secrets.CCR_USERNAME }} \
-            --password-stdin
-          
-          if [ $? -eq 0 ]; then
-            echo "✓ CCR 个人版登录成功"
-          else
-            echo "✗ CCR 登录失败，请检查用户名是否为腾讯云账号ID，密码是否为镜像仓库密码"
-            exit 1
-          fi
 
-      - name: 读取镜像列表并同步到两个仓库
+      # 新增：登录腾讯云容器镜像服务 CCR
+      - name: 登录腾讯云CCR容器镜像仓库
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.CCR_REGISTRY }}
+          username: ${{ secrets.CCR_USERNAME }}
+          password: ${{ secrets.CCR_PASSWORD }}
+
+      - name: 读取镜像列表并同步到 Coding + CCR
         run: |
+          # 读取 images.txt 文件中的镜像列表
           while IFS= read -r image || [[ -n "$image" ]]; do
             # 跳过空行和注释行
             [[ -z "$image" || "$image" =~ ^#.*$ ]] && continue
             
-            echo "=========================================="
-            echo "处理镜像: $image"
-            echo "=========================================="
+            echo "===== 开始处理源镜像: $image ====="
             
-            # 拉取镜像
+            # 拉取镜像（只拉取一次，两个仓库共用）
             docker pull $image || exit 1
             
             # 解析镜像名称和标签
@@ -65,52 +59,34 @@ jobs:
               repo=$org
               org=""
             fi
-            
-            # 构建 Coding 目标镜像名称
+
+            ##############################
+            # 1. 生成 Coding 目标镜像名称
+            ##############################
             if [ -z "$org" ]; then
               coding_target="${CODING_REGISTRY}/${CODING_NAMESPACE}/${repo}:${tag}"
             else
               coding_target="${CODING_REGISTRY}/${CODING_NAMESPACE}/${org}-${repo}:${tag}"
             fi
-            
-            # 构建 CCR 目标镜像名称
+            # 打标签并推送到 Coding
+            docker tag "$image" "$coding_target"
+            docker push "$coding_target"
+            echo "✅ 已同步至 Coding: $coding_target"
+
+            ##############################
+            # 2. 生成 CCR 容器镜像服务目标镜像名称
+            # 复用和 Coding 完全一致的命名规则，方便统一管理
+            ##############################
             if [ -z "$org" ]; then
               ccr_target="${CCR_REGISTRY}/${CCR_NAMESPACE}/${repo}:${tag}"
             else
               ccr_target="${CCR_REGISTRY}/${CCR_NAMESPACE}/${org}-${repo}:${tag}"
             fi
-            
-            echo "Coding 目标: $coding_target"
-            echo "CCR 目标: $ccr_target"
-            
-            # 标记并推送到 Coding
-            docker tag $image $coding_target
-            docker push $coding_target
-            if [ $? -eq 0 ]; then
-              echo "✓ 镜像已成功推送到 Coding: $coding_target"
-            else
-              echo "✗ 推送到 Coding 失败"
-              exit 1
-            fi
-            
-            # 标记并推送到 CCR
-            docker tag $image $ccr_target
-            docker push $ccr_target
-            if [ $? -eq 0 ]; then
-              echo "✓ 镜像已成功推送到 CCR: $ccr_target"
-            else
-              echo "✗ 推送到 CCR 失败"
-              exit 1
-            fi
-            
-            # 清理本地镜像
-            docker rmi $coding_target $ccr_target $image || true
-            
-            echo "✓ 镜像 $image 同步完成"
+            # 打标签并推送到腾讯云CCR
+            docker tag "$image" "$ccr_target"
+            docker push "$ccr_target"
+            echo "✅ 已同步至腾讯云CCR: $ccr_target"
+
+            echo "===== 镜像 $image 全部同步完成 ====="
             echo ""
-            
           done < images.txt
-          
-          echo "=========================================="
-          echo "所有镜像同步完成！"
-          echo "=========================================="
