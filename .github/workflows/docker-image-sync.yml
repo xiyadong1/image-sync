@@ -34,6 +34,7 @@ jobs:
           registry: ${{ secrets.CCR_REGISTRY }}
           username: ${{ secrets.TENCENT_CLOUD_SECRET_ID }}
           password: ${{ secrets.TENCENT_CLOUD_SECRET_KEY }}
+          logout: false
 
       - name: 读取镜像列表并同步到两个仓库
         run: |
@@ -65,7 +66,8 @@ jobs:
               coding_target="${CODING_REGISTRY}/${CODING_NAMESPACE}/${org}-${repo}:${tag}"
             fi
             
-            # 构建 CCR 目标镜像名称（使用 secret 中的 CCR_REGISTRY）
+            # 构建 CCR 目标镜像名称
+            # 注意：CCR_NAMESPACE 格式为 "1314359500/docker-rsync"
             if [ -z "$org" ]; then
               ccr_target="${CCR_REGISTRY}/${CCR_NAMESPACE}/${repo}:${tag}"
             else
