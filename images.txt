@@ -1,5 +1,5 @@
 #redis:6.2
 #nginx
 #easzlab/nfs-subdir-external-provisioner:v4.0.1
-docker.io/cairry/watchalert:latest
-docker.io/cairry/watchalert-web:latest
+cairry/watchalert:latest
+cairry/watchalert-web:latest
