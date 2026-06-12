@@ -3,4 +3,4 @@
 #easzlab/nfs-subdir-external-provisioner:v4.0.1
 #cairry/watchalert:latest
 #cairry/watchalert-web:latest
-pgbi/kong-dashboard
+pgbi/kong-dashboard:latest
