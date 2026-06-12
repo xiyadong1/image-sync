@@ -1,5 +1,6 @@
 #redis:6.2
 #nginx
 #easzlab/nfs-subdir-external-provisioner:v4.0.1
-cairry/watchalert:latest
-cairry/watchalert-web:latest
+#cairry/watchalert:latest
+#cairry/watchalert-web:latest
+pgbi/kong-dashboard
