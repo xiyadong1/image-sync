@@ -4,4 +4,6 @@
 #cairry/watchalert:latest
 #cairry/watchalert-web:latest
 #pgbi/kong-dashboard:latest
-jsonljd/konga-lang-plugin:latest
+#jsonljd/konga-lang-plugin:latest
+node:20.19.4-alpine3.21
+lipanski/docker-static-website:latest
