@@ -19,5 +19,5 @@
 #soldevelo/postgresql-repmgr:17.6.0-debian-12-r0
 #soldevelo/pgpool:4.6.3-debian-12-r0
 #soldevelo/os-shell:12-debian-12-r3
-apache/doris:operator-25.8.0|linux/arm64
+#apache/doris:operator-25.8.0|linux/arm64
 selectdb/alpine:2.0.2|linux/arm64
