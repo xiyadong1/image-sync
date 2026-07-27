@@ -22,4 +22,5 @@
 #apache/doris:operator-25.8.0|linux/arm64
 #selectdb/alpine:latest|linux/arm64
 #busybox:1.36|linux/arm64
-zookeeper:3.9.3|linux/arm64
+#zookeeper:3.9.3|linux/arm64
+apache/dolphinscheduler-api:3.4.2|linux/arm64
