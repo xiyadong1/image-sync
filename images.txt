@@ -26,5 +26,6 @@
 #apache/dolphinscheduler-api:3.4.2|linux/arm64
 #apache/dolphinscheduler-master:3.4.2|linux/arm64
 #apache/dolphinscheduler-worker:3.4.2|linux/arm64
-apache/dolphinscheduler-alert-server:3.4.2|linux/arm64
+#apache/dolphinscheduler-alert-server:3.4.2|linux/arm64
+apache/dolphinscheduler-tools:3.4.2|linux/arm64
 
