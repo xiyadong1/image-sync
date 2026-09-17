@@ -1,39 +1,33 @@
-name: Docker Image Sync to Tencent Coding & Tencent CCR
-
+name: Docker Image Sync to CND & Tencent CCR
 on:
   push:
     paths:
       - 'images.txt'
-
 env:
-  # Coding 仓库环境变量
-  CODING_REGISTRY: ${{ secrets.CODING_REGISTRY }}
-  CODING_NAMESPACE: ${{ secrets.CODING_NAMESPACE }}
+  # CND 仓库环境变量
+  CND_REGISTRY: ${{ secrets.CND_REGISTRY }}
+  CND_NAMESPACE: ${{ secrets.CND_NAMESPACE }}
   # 腾讯云容器镜像服务 CCR 环境变量
   CCR_REGISTRY: ${{ secrets.CCR_REGISTRY }}
   CCR_NAMESPACE: ${{ secrets.CCR_NAMESPACE }}
-  # ===== [新增] 全局默认拉取平台架构 =====
+  # ===== 全局默认拉取平台架构 =====
   # 可选值: linux/amd64, linux/arm64, linux/arm/v7 等
-  # 可在此处修改，也可在 GitHub > Settings > Secrets and variables > Actions > Variables 中设置
   PLATFORM: linux/amd64
-
 jobs:
   sync-images:
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码
         uses: actions/checkout@v2
-
       - name: 设置 Docker Buildx
         uses: docker/setup-buildx-action@v2
-
-      - name: 登录到腾讯云 Coding 镜像仓库
+      # ========== 登录 CND 镜像仓库 ==========
+      - name: 登录到 CND docker.cnb.cool
         uses: docker/login-action@v2
         with:
-          registry: ${{ secrets.CODING_REGISTRY }}
-          username: ${{ secrets.CODING_USERNAME }}
-          password: ${{ secrets.CODING_PASSWORD }}
-
+          registry: ${{ secrets.CND_REGISTRY }}
+          username: ${{ secrets.CND_USERNAME }}
+          password: ${{ secrets.CND_PASSWORD }}
       - name: 登录腾讯云CCR容器镜像仓库
         uses: docker/login-action@v2
         with:
@@ -41,15 +35,14 @@ jobs:
           username: ${{ secrets.CCR_USERNAME }}
           password: ${{ secrets.CCR_PASSWORD }}
           ecr: false
-
-      - name: 读取镜像列表并同步到 Coding + CCR
+      - name: 读取镜像列表并同步到 CND + CCR
         run: |
           # 读取 images.txt 文件中的镜像列表
           while IFS= read -r line || [[ -n "$line" ]]; do
             # 跳过空行和注释行
             [[ -z "$line" || "$line" =~ ^#.*$ ]] && continue
             
-            # ===== [修改] 解析平台和镜像 =====
+            # ===== 解析平台和镜像 =====
             # 支持两种格式：
             #   image:tag              -> 使用 $PLATFORM 默认平台
             #   image:tag|linux/arm64  -> 使用指定的平台（按行覆盖）
@@ -63,7 +56,7 @@ jobs:
             
             echo "===== 开始处理源镜像: $image (平台: $platform) ====="
             
-            # ===== [修改] 拉取镜像时指定平台架构 =====
+            # ===== 拉取镜像时指定平台架构 =====
             docker pull --platform "$platform" "$image" || exit 1
             
             # 解析镜像名称和标签
@@ -75,20 +68,19 @@ jobs:
               repo=$org
               org=""
             fi
-
             ##############################
-            # 1. 生成 Coding 目标镜像名称
+            # 1. 生成 CND 目标镜像名称
+            # CND registry: docker.cnb.cool , namespace: xiyadong/docker-image
             ##############################
             if [ -z "$org" ]; then
-              coding_target="${CODING_REGISTRY}/${CODING_NAMESPACE}/${repo}:${tag}"
+              cnd_target="${CND_REGISTRY}/${CND_NAMESPACE}/${repo}:${tag}"
             else
-              coding_target="${CODING_REGISTRY}/${CODING_NAMESPACE}/${org}-${repo}:${tag}"
+              cnd_target="${CND_REGISTRY}/${CND_NAMESPACE}/${org}-${repo}:${tag}"
             fi
-            # 打标签并推送到 Coding
-            docker tag "$image" "$coding_target"
-            docker push "$coding_target"
-            echo "✅ 已同步至 Coding: $coding_target"
-
+            # 打标签并推送到 CND
+            docker tag "$image" "$cnd_target"
+            docker push "$cnd_target"
+            echo "✅ 已同步至 CND: $cnd_target"
             ##############################
             # 2. 生成 CCR 容器镜像服务目标镜像名称
             ##############################
@@ -101,7 +93,6 @@ jobs:
             docker tag "$image" "$ccr_target"
             docker push "$ccr_target"
             echo "✅ 已同步至腾讯云CCR: $ccr_target"
-
             echo "===== 镜像 $image 全部同步完成 ====="
             echo ""
           done < images.txt
