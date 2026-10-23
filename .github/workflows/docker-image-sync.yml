@@ -19,8 +19,17 @@ jobs:
     steps:
       - name: 检出代码
         uses: actions/checkout@v2
+
+      - name: 初始化结果输出文件
+        run: |
+          rm -f sync_result.txt
+          echo "==== Docker镜像同步结果 ====" > sync_result.txt
+          echo "执行时间: $(date -Iseconds)" >> sync_result.txt
+          echo "" >> sync_result.txt
+
       - name: 设置 Docker Buildx
         uses: docker/setup-buildx-action@v2
+
       # ========== 登录 CND 镜像仓库 ==========
       - name: 登录到 CND docker.cnb.cool
         uses: docker/login-action@v2
@@ -28,6 +37,7 @@ jobs:
           registry: ${{ secrets.CND_REGISTRY }}
           username: ${{ secrets.CND_USERNAME }}
           password: ${{ secrets.CND_PASSWORD }}
+
       - name: 登录腾讯云CCR容器镜像仓库
         uses: docker/login-action@v2
         with:
@@ -35,6 +45,7 @@ jobs:
           username: ${{ secrets.CCR_USERNAME }}
           password: ${{ secrets.CCR_PASSWORD }}
           ecr: false
+
       - name: 读取镜像列表并同步到 CND + CCR
         run: |
           # 读取 images.txt 文件中的镜像列表
@@ -55,9 +66,6 @@ jobs:
             fi
             
             echo "===== 开始处理源镜像: $image (平台: $platform) ====="
-            echo "=== CND 环境变量 ==="
-            echo "CND_REGISTRY=${CND_REGISTRY}"
-            echo "CND_NAMESPACE=${CND_NAMESPACE}"
             
             # ===== 拉取镜像时指定平台架构 =====
             docker pull --platform "$platform" "$image" || exit 1
@@ -80,12 +88,11 @@ jobs:
               cnd_target="${CND_REGISTRY}/${CND_NAMESPACE}/${org}-${repo}:${tag}"
             fi
 
-            echo "cnd_target=${cnd_target}"
             # 打标签并推送到 CND
             docker tag "$image" "$cnd_target"
             docker push "$cnd_target"
             echo "✅ 已同步至 CND"
-            echo "👉 CND 拉取命令：docker pull $cnd_target"
+
             ##############################
             # 2. 生成 CCR 容器镜像服务目标镜像名称
             ##############################
@@ -98,7 +105,34 @@ jobs:
             docker tag "$image" "$ccr_target"
             docker push "$ccr_target"
             echo "✅ 已同步至腾讯云CCR"
-            echo "👉 CCR 拉取命令：docker pull $ccr_target"
+
+            ##############################
+            # 写入本地结果文件（真实原值，不会被***掩码）
+            ##############################
+            {
+              echo "----------------------------------------"
+              echo "源镜像: ${image}"
+              echo "平台: ${platform}"
+              echo "CND_REGISTRY: ${CND_REGISTRY}"
+              echo "CND_NAMESPACE: ${CND_NAMESPACE}"
+              echo "CND目标镜像: ${cnd_target}"
+              echo "CND拉取命令: docker pull ${cnd_target}"
+              echo "CCR_REGISTRY: ${CCR_REGISTRY}"
+              echo "CCR_NAMESPACE: ${CCR_NAMESPACE}"
+              echo "CCR目标镜像: ${ccr_target}"
+              echo "CCR拉取命令: docker pull ${ccr_target}"
+              echo "----------------------------------------"
+              echo ""
+            } >> sync_result.txt
+
             echo "===== 镜像 $image 全部同步完成 ====="
             echo ""
           done < images.txt
+
+      # 上传结果文件为制品，Action页面可以下载
+      - name: 上传同步结果文件
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-sync-result
+          path: sync_result.txt
+          retention-days: 7
