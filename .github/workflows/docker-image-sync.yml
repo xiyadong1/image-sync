@@ -96,15 +96,15 @@ jobs:
             ##############################
             # 2. 生成 CCR 容器镜像服务目标镜像名称
             ##############################
-            if [ -z "$org" ]; then
-              ccr_target="${CCR_REGISTRY}/${CCR_NAMESPACE}/${repo}:${tag}"
-            else
-              ccr_target="${CCR_REGISTRY}/${CCR_NAMESPACE}/${org}-${repo}:${tag}"
-            fi
-            # 打标签并推送到腾讯云CCR
-            docker tag "$image" "$ccr_target"
-            #docker push "$ccr_target"
-            echo "✅ 已同步至腾讯云CCR"
+            # if [ -z "$org" ]; then
+            #   ccr_target="${CCR_REGISTRY}/${CCR_NAMESPACE}/${repo}:${tag}"
+            # else
+            #   ccr_target="${CCR_REGISTRY}/${CCR_NAMESPACE}/${org}-${repo}:${tag}"
+            # fi
+            # # 打标签并推送到腾讯云CCR
+            # docker tag "$image" "$ccr_target"
+            # #docker push "$ccr_target"
+            # echo "✅ 已同步至腾讯云CCR"
 
             ##############################
             # 写入本地结果文件（真实原值，不会被***掩码）
@@ -117,10 +117,10 @@ jobs:
               echo "CND_NAMESPACE: ${CND_NAMESPACE}"
               echo "CND目标镜像: ${cnd_target}"
               echo "CND拉取命令: docker pull ${cnd_target}"
-              echo "CCR_REGISTRY: ${CCR_REGISTRY}"
-              echo "CCR_NAMESPACE: ${CCR_NAMESPACE}"
-              echo "CCR目标镜像: ${ccr_target}"
-              echo "CCR拉取命令: docker pull ${ccr_target}"
+              # echo "CCR_REGISTRY: ${CCR_REGISTRY}"
+              # echo "CCR_NAMESPACE: ${CCR_NAMESPACE}"
+              # echo "CCR目标镜像: ${ccr_target}"
+              # echo "CCR拉取命令: docker pull ${ccr_target}"
               echo "----------------------------------------"
               echo ""
             } >> sync_result.txt
