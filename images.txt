@@ -32,5 +32,4 @@
 #kong:3.9.3|linux/arm64
 #redis:7
 bladepipe/cgdm-alone:4.5.1|linux/arm64
-
-
+bladepipe/cgdm-alone:4.5.1
