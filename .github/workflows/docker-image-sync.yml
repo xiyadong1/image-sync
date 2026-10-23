@@ -103,7 +103,7 @@ jobs:
             fi
             # 打标签并推送到腾讯云CCR
             docker tag "$image" "$ccr_target"
-            docker push "$ccr_target"
+            #docker push "$ccr_target"
             echo "✅ 已同步至腾讯云CCR"
 
             ##############################
